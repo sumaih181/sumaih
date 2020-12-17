@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The Wishing App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div>
+        <h1 style="display: inline;">Hello {{ user_logged_in.first_name }} !</h1>
+
+    <a href="/logout">   |  Logout  |  </a>
+
+    
+
+    <a href="/wishes/Make_a_wish">   |  Make a wish   |  </a></div>
+
+    <a href="/wishes/view_stats">   |  View stats   |  </a></div>
+
+
+    <h3>your wish list:</h3>
+    <table class="table table-bordered table-striped" >
+        <thead>
+            <tr>
+                <th>Item </th>
+                <th>Date added</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+    {% for wish in all_wishes_not_granted %}
+        {% if wish.uploaded_by == user_logged_in %}
+            <tr>
+                <td>{{ wish.name }}</td>
+                <td>{{ wish.created_at }}</td>
+                <td>
+                    <a href="/wishes/{{ wish.id }}/remove">Remove </a>
+                    |
+                    <a href="/wishes/{{ wish.id }}/edit">Edit </a>
+                    |
+                    <a href="/wishes/{{ wish.id }}/granted">Granted! </a>
+                    
+                </td>
+                
+            </tr>
+        {% endif %}
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h3>Granted wishes: </h3>
+    <table class="table table-bordered table-striped" >
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Wisher</th>
+                <th>Date added</th>
+                <th>Date granted</th>
+                <th>Likes</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for wish in all_wishes_granted %}
+            <tr>
+                <td>{{ wish.name }}</td>
+                <td>{{ wish.uploaded_by.first_name }}</td>
+                <td>{{ wish.created_at }}</td>
+                <td>{{ wish.updated_at }}</td>
+                <td>{{ wish.favorited_by.all | length }}</td>
+                <td>
+            {% if wish.uploaded_by != user_logged_in %}    
+                    {% if user_logged_in in wish.favorited_by.all %}
+                    <a href="/wishes/{{ wish.id }}/unfavorite">Unlike</a>
+                    {% else %}
+                    <a href="/wishes/{{ wish.id }}/favorite">Like</a>
+                    {% endif %}
+            {% endif %}       
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

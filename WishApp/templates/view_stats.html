@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The Wishing App</title>
+</head>
+
+<body>
+    <h1 style="display: inline;" >Hello {{ user_logged_in.first_name }} !these are your stats! </h1>
+
+    <a href="/logout">   |  Logout  |  </a>
+    <a href="/wishes">   |  dashbord  |  </a>
+<h2>  Total wishes granted so far for all useres: {{ all_wishes_granted | length }}   </h2>
+
+
+<p> Your granded wishes: {{ user_wishes_granted | length }}   </p>
+
+<p> Your pending wishes: {{ user_wishes_not_granted | length }}   </p>
+
+
+</body>
+
+</html>

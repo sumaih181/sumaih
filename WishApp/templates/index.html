@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>The Wishing App</title>
+</head>
+
+<body style="display: inline;">
+    <h1>Welcome! Sign in to make a wish!</h1>
+<div  >
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>Register</h2>
+    <form  action="/register" method="post">
+        {% csrf_token %}
+        <p>first_name<input type="text" name="first_name" /></p>
+        <p>last_name<input type="text" name="last_name" /></p>
+        <p>email<input type="text" name="email" /></p>
+        <p>password<input type="password" name="password" /></p>
+        <p>confirm_password<input type="password" name="confirm_password" /></p>
+        <button type="submit">Register</button>
+    </form>
+</div>
+<div>
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        {% csrf_token %}
+        <p>email<input type="text" name="email" /></p>
+        <p>password<input type="password" name="password" /></p>
+        <button type="submit">Login</button>
+    </form>
+</div>
+</body>
+
+</html>
